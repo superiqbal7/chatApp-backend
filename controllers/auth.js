@@ -52,7 +52,7 @@ module.exports = {
         //save to database
         User.create(body).then(user => {
             const token = jwt.sign({data: user}, dbConfig.secret, {
-                expiresIn: 120
+                expiresIn: '1h'
             });
             res.cookie('auth', token);
 
