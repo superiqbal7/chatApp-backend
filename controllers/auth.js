@@ -88,7 +88,7 @@ module.exports = {
           }
           //creating token
           const token = jwt.sign({ data: user }, dbConfig.secret, {
-            expiresIn: '5h'
+            expiresIn: '120'
           });
           //set the cookie
           res.cookie('auth', token);
