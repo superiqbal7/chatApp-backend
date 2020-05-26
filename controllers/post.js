@@ -59,18 +59,48 @@ module.exports = {
       });
   },
 
-  async GetAllPosts(req,res){
-     try{
+  async GetAllPosts(req, res) {
+    try {
       const posts = await Post.find({})
         .populate('User')
-        .sort({created: -1});
+        .sort({ created: -1 });
 
-      return res.status(HttpStatus.OK).json({message: 'All posts', posts});
-     }
-     catch(err){
+      return res.status(HttpStatus.OK).json({ message: 'All posts', posts });
+    }
+    catch (err) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ message: 'Error occured', err });
-      }
     }
+  },
+
+  async AddLike(req, res) {
+    const postId = req.body._id;
+    await Post.update(
+      {
+        _id: postId,
+        'likes.username': { 
+          $ne: req.user.username 
+        }
+      },
+      {
+        $push: {
+          likes: {
+            username: req.user.username
+          }
+        },
+        $inc: { totalLikes: 1 }
+      }
+    )
+      .then(() => {
+        res.status(HttpStatus.OK).json({
+          message: 'You liked the post'
+        });
+      })
+      .catch(err => {
+        res
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .json({ message: "Error Occured" });
+      })
+  }
 }
