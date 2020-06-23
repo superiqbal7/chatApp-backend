@@ -102,5 +102,36 @@ module.exports = {
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
           .json({ message: "Error Occured" });
       })
-  }
+  },
+
+  async AddComment(req, res) {
+    console.log(req.body);
+    
+    const postId = req.body.postId;
+    await Post.update(
+      {
+        _id: postId
+      },
+      {
+        $push: {
+          comments: {
+            userId: req.user._id,
+            username: req.user.username,
+            comment: req.body.comment,
+            createdAt: new Date()
+          }
+        }
+      }
+    )
+      .then(() => {
+        res.status(HttpStatus.OK).json({
+          message: 'You liked the post'
+        });
+      })
+      .catch(err => {
+        res
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .json({ message: "Error Occured" });
+      })
+  }  
 }
