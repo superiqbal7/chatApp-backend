@@ -5,7 +5,7 @@ const HttpStatus = require('http-status-codes');
 const Post = require('../models/postModels');
 const User = require('../models/userModel');
 
-module.exports = {
+module.exports = {     
 
   AddPost(req, res) {
     // console.log(req.body);
@@ -125,7 +125,7 @@ module.exports = {
     )
       .then(() => {
         res.status(HttpStatus.OK).json({
-          message: 'You liked the post'
+          message: 'You commented in the post'
         });
       })
       .catch(err => {
@@ -133,5 +133,21 @@ module.exports = {
           .status(HttpStatus.INTERNAL_SERVER_ERROR)
           .json({ message: "Error Occured" });
       })
-  }  
+  },
+
+  async GetPost(req, res) {
+    console.log(req.params.id);
+    
+    await Post.findOne({ _id: req.params.id })
+      .populate('User')
+      .populate('comments.User')
+      .then(post => {
+        res.status(HttpStatus.OK).json({ message: 'Post found', post });
+      })
+      .catch(err =>
+        res
+          .status(HttpStatus.NOT_FOUND)
+          .json({ message: 'Post not found', err })
+      );
+  }
 }
