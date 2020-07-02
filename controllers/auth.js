@@ -78,7 +78,7 @@ module.exports = {
             .status(HttpStatus.NOT_FOUND)
             .json({ message: 'Username not found' });
         }
-
+ 
         //checking password
         return bcrypt.compare(req.body.password, user.password).then(result => {
           if (!result) {
