@@ -6,7 +6,7 @@ const UserCtrl = require('../controllers/users');
 const AuthHelper = require('../Helper/AuthHelper');
 
 router.get('/users', AuthHelper.VerifyToken, UserCtrl.GetAllUsers);
-router.get('/user/:id', AuthHelper.VerifyToken, UserCtrl.GetAllUser);
-router.get('/user/:username', AuthHelper.VerifyToken, UserCtrl.GetUserByName);
+router.get('/user/:id', AuthHelper.VerifyToken, UserCtrl.GetUsers);
+router.get('/user/:username', AuthHelper.VerifyToken, UserCtrl.GetUserByUserName);
 
 module.exports = router;
