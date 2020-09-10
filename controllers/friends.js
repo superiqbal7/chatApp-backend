@@ -6,6 +6,7 @@ module.exports = {
     const followUser = async () => {
       await User.update(
         {
+          
           _id: req.user._id,
           'following.userFollowed': { $ne: req.body.userFollowed }
         },
@@ -37,6 +38,49 @@ module.exports = {
       .then(() => {
         res.status(HttpStatus.OK).json({
           message: 'following'})
+      })
+      .catch(err => {
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+          message: 'Error Occured'
+        })
+      })
+  },
+  UnFollowUser(req, res) {
+    const unFollowUser = async () => {
+      await User.update(
+        {
+
+          _id: req.user._id,
+          // 'following.userFollowed': { $ne: req.body.userFollowed }
+        },
+        {
+          $pull: {
+            following: {
+              userFollowed: req.body.userFollowed
+            }
+          }
+        }
+      );
+
+      await User.update(
+        {
+          _id: req.body.userFollowed
+        },
+        {
+          $pull: {
+            followers: {
+              follower: req.user._id
+            }
+          }
+        }
+      );
+    };
+
+    unFollowUser()
+      .then(() => {
+        res.status(HttpStatus.OK).json({
+          message: 'following'
+        })
       })
       .catch(err => {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({

@@ -17,7 +17,7 @@ module.exports = {
   },
 
   async GetUsers(req, res) {
-    await User.find({_id: req.params.id})
+    await User.findOne({_id: req.params.id})
       .populate('posts.postId')
       .populate('following.userFollowed')
       .populate('followers.follower')
@@ -29,7 +29,7 @@ module.exports = {
   },
 
   async GetUserByUserName(req, res) {
-    await User.find({ _id: req.params.username })
+    await User.findOne({ _id: req.params.username })
       .populate('posts.postId')
       .populate('following.userFollowed')
       .populate('followers.follower')
