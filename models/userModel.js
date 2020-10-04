@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema({
     notifications: [
         {
             senderId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
-            message: {type: string},
+            message: { type: String},
             viewProfile: { type: Boolean, default: false},
             created: {type: Date, default: Date.now()},
             read: {type: Boolean, default: false},
