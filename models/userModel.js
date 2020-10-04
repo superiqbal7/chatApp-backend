@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { string } = require('joi');
+const { string, boolean } = require('joi');
 
 const userSchema = mongoose.Schema({
     username: { type: String },
@@ -24,6 +24,16 @@ const userSchema = mongoose.Schema({
             follower: {
                 type: mongoose.Schema.Types.ObjectId, ref: 'user'
             }
+        }
+    ],
+    notifications: [
+        {
+            senderId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+            message: {type: string},
+            viewProfile: { type: Boolean, default: false},
+            created: {type: Date, default: Date.now()},
+            read: {type: Boolean, default: false},
+            date: {type: String, default: ''}
         }
     ]
 })
