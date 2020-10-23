@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { string, boolean } = require('joi');
 
 const userSchema = mongoose.Schema({
+    name: {type: String},
     username: { type: String },
     email: { type: String },
     password: { type: String },
