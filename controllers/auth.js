@@ -5,6 +5,7 @@ const Helpers = require('../Helper/helpers');
 const dbConfig = require('../config/secret');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const capitalizeAllWords = require("capitalizefirstletterofwords");
 
 module.exports = {
   async CreateUser(req, res) {
@@ -47,6 +48,7 @@ module.exports = {
             return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Error hasing password'})
         }
         const body = {
+            name: capitalizeAllWords(value.name),
             username: Helpers.firstUpper(value.username),
             email: Helpers.lowerCase(value.email),
             password: hash
@@ -54,7 +56,7 @@ module.exports = {
         //save to database
         User.create(body).then(user => {
             const token = jwt.sign({data: user}, dbConfig.secret, {
-                expiresIn: '1h'
+                expiresIn: '5h'
             });
             res.cookie('auth', token);
 
