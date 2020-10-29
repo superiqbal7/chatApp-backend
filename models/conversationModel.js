@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ConversationSchema = mongoose.Schema({
-  particiapnts: [
+  participants: [
     {
       senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'user'},
       receiverId: { type: mongoose.Schema.Types.ObjectId, ref: 'user'}
@@ -9,4 +9,4 @@ const ConversationSchema = mongoose.Schema({
   ]
 });
 
-mondule.exports = mongoose.model('Conversation', ConversationSchema);
+module.exports = mongoose.model('Conversation', ConversationSchema);
