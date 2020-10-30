@@ -5,7 +5,33 @@ const Conversation = require('../models/conversationModel');
 const User = require('../models/userModel');
 
 module.exports = {
-   SendMessage(req, res) {
+  async GetAllMessages(req, res) {
+    const { sender_Id, receiver_Id } = req.params;
+    const conversation = await Conversation.findOne({
+      $or: [
+        {
+          $and: [
+            { 'participants.senderId': sender_Id },
+            { 'participants.receiverId': receiver_Id}
+          ]
+        },
+        {
+          $and: [
+            { 'participants.senderId': receiver_Id},
+            { 'participants.receiverId': sender_Id}
+          ]
+        }
+      ]
+    }).select('_id')
+
+    if(conversation){
+      const messages = await Message.findOne({ conversationId: conversation._id});
+      console.log("okay--------");
+      res.status(HttpStatus.OK).json({ message: 'Messages returned', messages})
+    }
+  },
+
+  SendMessage(req, res) {
     const { sender_Id, receiver_Id } = req.params;
 
     Conversation.find({
@@ -23,6 +49,25 @@ module.exports = {
       ]
     }, async (err, result) => {
       if(result.length > 0){
+        await Message.updateOne({
+          conversationId: result[0]._id
+        },
+        {
+          $push: {
+            message: {
+              senderId: req.user._id,
+              receiverId: req.params.receiver_Id,
+              senderName: req.user.username,
+              receiverName: req.body.receiverName,
+              body: req.body.message
+            }
+          }
+          }).then(() => {
+            res.status(HttpStatus.OK).json({ message: 'Message sent successfully' })
+          })
+          .catch(err =>
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Error occured' })
+          );
 
       } else {
         const newConversation = new Conversation();
@@ -45,7 +90,7 @@ module.exports = {
           body: req.body.message
         });
 
-        await User.update({
+        await User.updateOne({
           _id: req.user._id
         },{
           $push: {
@@ -61,7 +106,7 @@ module.exports = {
           }
         })
 
-        await User.update({
+        await User.updateOne({
           _id: req.params.receiver_Id 
         }, {
           $push: {
@@ -77,10 +122,10 @@ module.exports = {
           }
         })
 
-        await newMessage()
+        await newMessage
           .save()
           .then(()=>{
-            res.staus(HttpStatus.OK).json({ message: 'Message sent'})
+            res.status(HttpStatus.OK).json({ message: 'Message sent'})
           })
           .catch(err => 
             res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Error occured'})
@@ -89,4 +134,6 @@ module.exports = {
     }
     )
   }
+
+  
 }
