@@ -42,7 +42,8 @@ mongoose.connect(dbConfig.url, {
   useUnifiedTopology: true,
 });
 
-require('./socket/streams')(io)
+require('./socket/streams')(io);
+require('./socket/private')(io);
 
 const auth = require("./routes/authRoutes");
 const posts = require("./routes/postRoutes");
