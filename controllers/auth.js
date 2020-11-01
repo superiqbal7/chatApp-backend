@@ -9,7 +9,7 @@ const capitalizeAllWords = require("capitalizefirstletterofwords");
 
 module.exports = {
   async CreateUser(req, res) {
-    console.log(req.body);
+    //console.log(req.body);
     const schema = Joi.object({
       name: Joi.string().min(3).max(30).required(),
 

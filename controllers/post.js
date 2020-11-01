@@ -79,7 +79,7 @@ module.exports = {
 
   async AddLike(req, res) {
     const postId = req.body._id;
-    await Post.update(
+    await Post.updateOne(
       {
         _id: postId,
         'likes.username': { 
@@ -108,10 +108,10 @@ module.exports = {
   },
 
   async AddComment(req, res) {
-    console.log(req.body);
+    //console.log(req.body);
     
     const postId = req.body.postId;
-    await Post.update(
+    await Post.updateOne(
       {
         _id: postId
       },
@@ -139,7 +139,7 @@ module.exports = {
   },
 
   async GetPost(req, res) {
-    console.log(req.params.id);
+    //console.log(req.params.id);
     
     await Post.findOne({ _id: req.params.id })
       .populate('User')

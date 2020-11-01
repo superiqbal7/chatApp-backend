@@ -4,7 +4,7 @@ const User = require('../models/userModel');
 module.exports = {
   FollowUser(req,res){
     const followUser = async () => {
-      await User.update(
+      await User.updateOne(
         {
           
           _id: req.user._id,
@@ -19,7 +19,7 @@ module.exports = {
         }
       );
 
-      await User.update(
+      await User.updateOne(
         {
           _id: req.body.userFollowed,
           'following.follower': { $ne: req.user._id }
@@ -53,7 +53,7 @@ module.exports = {
   },
   UnFollowUser(req, res) {
     const unFollowUser = async () => {
-      await User.update(
+      await User.updateOne(
         {
 
           _id: req.user._id,
@@ -68,7 +68,7 @@ module.exports = {
         }
       );
 
-      await User.update(
+      await User.updateOne(
         {
           _id: req.body.userFollowed
         },
@@ -137,7 +137,7 @@ module.exports = {
   },
 
   async MarkAllNotifications(req, res){
-    await User.update({
+    await User.updateOne({
       _id: req.user._id
     },{
       $set: { 'notifications.$[elem].read': true}

@@ -2,7 +2,6 @@
 module.exports = function (io) {
   io.on('connection', (socket) => {
     socket.on('join chat', params => {
-      console.log("xcgzxv");
       //io.emit('refreshPage', {})
       socket.join(params.room1);
       socket.join(params.room2);

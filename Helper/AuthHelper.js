@@ -13,7 +13,7 @@ module.exports = {
     }
 
     const token = req.cookies.auth || req.headers.authorization.split(' ')[1];
-    console.log(req.headers);
+    //console.log(req.headers);
 
     if (!token) {
       return res.status(HttpStatus.FORBIDDEN).json({ messenger: 'No token provided' })
