@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const _ = require('lodash');
 // const logger = require('morgan');
 const app = express();
 
@@ -11,7 +12,10 @@ const dbConfig = require("./config/secret");
 
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
-require('./socket/streams')(io);
+
+const { User } = require('./Helper/UserClass');
+
+require('./socket/streams')(io, User, _);
 require('./socket/private')(io);
 
 const auth = require("./routes/authRoutes");
