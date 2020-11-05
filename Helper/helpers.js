@@ -11,7 +11,7 @@ module.exports = {
     },
 
     updatechatList: async (req, message) => {
-        await User.update(
+        await User.updateOne(
             {
                 _id: req.user._id
             },
@@ -24,7 +24,7 @@ module.exports = {
             }
         );
 
-        await User.update(
+        await User.updateOne(
             {
                 _id: req.params.receiver_Id
             },
