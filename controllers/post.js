@@ -35,7 +35,7 @@ module.exports = {
     Post.create(bodyObj)
       .then(async post => {
         //updating post in user array 
-        await User.update(
+        await User.updateOne(
           //getting the userid from req and save post in user array
           {
             _id: req.user._id
