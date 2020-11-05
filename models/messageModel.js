@@ -13,7 +13,7 @@ const MessageSchema = mongoose.Schema({
       receiverName: { type: String },
       body: { type: String, default: ''},
       isRead: { type: Boolean, default: false},
-      createdAt: { type: Date, default: Date.now()}
+      createdAt: { type: Date, default: Date.now}
     }
   ]
 });
