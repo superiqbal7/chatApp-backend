@@ -13,6 +13,7 @@
     "@hapi/joi": "^17.1.1",
     "bcrypt": "^4.0.1",
     "capitalizefirstletterofwords": "^1.0.4",
+    "cloudinary": "^1.23.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
