@@ -43,8 +43,8 @@ const userSchema = mongoose.Schema({
             msgId: { type: mongoose.Schema.Types.ObjectId, ref: 'Message'}
         }
     ],
-    picVersion: { type: String, default: '' },
-    picId: { type: String, default: '' },
+    picVersion: { type: String, default: '1605180742' },
+    picId: { type: String, default: 'mr-peanutbutter_gd2acc.jpg' },
     images: [
         {
             imgId: { type: String, default: '' },
