@@ -11,7 +11,6 @@ cloudinary.config({
 
 module.exports = {
   UploadImage(req, res) {
-    console.log(req.body);
     cloudinary.uploader.upload(req.body.image, async result => {
       await User.updateOne(
         {
