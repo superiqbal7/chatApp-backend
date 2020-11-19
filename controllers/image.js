@@ -37,4 +37,27 @@ module.exports = {
         );
     });
   },
+
+  async SetDefaultImage(req, res){
+    const {imgId, imgVersion } = req.params;
+    await User.updateOne(
+      {
+        _id: req.user._id
+      },
+      {
+        picId: imgId,
+        picVersion: imgVersion
+      }
+    )
+      .then(() =>
+        res
+          .status(HttpStatus.OK)
+          .json({ message: 'Profile picture updated' })
+      )
+      .catch(err =>
+        res
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .json({ message: 'Error uploading profile picture' })
+      );
+  }
 };
