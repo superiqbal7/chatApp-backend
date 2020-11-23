@@ -8,10 +8,6 @@ const User = require('../models/userModel');
 module.exports = {     
 
   AddPost(req, res) {
-    // console.log(req.body);
-    // console.log(req.cookies);
-    // console.log(req.user);
-
     //creating schema for req to validate post data
     const schema = Joi.object().keys({
       post: Joi.string().required()
@@ -108,7 +104,6 @@ module.exports = {
   },
 
   async AddComment(req, res) {
-    //console.log(req.body);
     
     const postId = req.body.postId;
     await Post.updateOne(
