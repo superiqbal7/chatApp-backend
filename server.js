@@ -55,8 +55,6 @@ mongoose.connect(dbConfig.url, {
   useUnifiedTopology: true,
 });
 
-//const { REQUEST_TIMEOUT } = require("http-status-codes");
-
 app.use("/api/chatapp", auth);
 app.use("/api/chatapp", posts);
 app.use("/api/chatapp", users);
