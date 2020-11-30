@@ -58,11 +58,13 @@ module.exports = {
   async GetAllPosts(req, res) {
     try {
       const posts = await Post.find({})
-        .populate('User')
+        .populate('user')
         .sort({ created: -1 });
       const top = await Post.find({totalLikes: {$gte: 2}})
-        .populate('User')
+        .populate('user')
         .sort({ created: -1 });
+      
+      const user = await User.findOne({ _id: req.user._id });
 
       return res.status(HttpStatus.OK).json({ message: 'All posts', posts, top });
     }
