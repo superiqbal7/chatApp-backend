@@ -16,20 +16,20 @@ const userSchema = mongoose.Schema({
     following: [
         {
             userFollowed: {
-                type: mongoose.Schema.Types.ObjectId, ref: 'user'
+                type: mongoose.Schema.Types.ObjectId, ref: 'User'
             }
         }
     ],
     followers: [
         {
             follower: {
-                type: mongoose.Schema.Types.ObjectId, ref: 'user'
+                type: mongoose.Schema.Types.ObjectId, ref: 'User'
             }
         }
     ],
     notifications: [
         {
-            senderId: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+            senderId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
             message: { type: String},
             viewProfile: { type: Boolean, default: false},
             created: {type: Date, default: Date.now()},
@@ -39,7 +39,7 @@ const userSchema = mongoose.Schema({
     ],
     chatList: [
         {
-            receiverId: { type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+            receiverId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
             msgId: { type: mongoose.Schema.Types.ObjectId, ref: 'Message'}
         }
     ],
@@ -53,4 +53,4 @@ const userSchema = mongoose.Schema({
     ],
 })
 
-module.exports = mongoose.model('user', userSchema)
+module.exports = mongoose.model('User', userSchema)
