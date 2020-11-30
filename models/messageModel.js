@@ -7,8 +7,8 @@ const MessageSchema = mongoose.Schema({
   receiver: { type: String},
   message: [
     {
-      senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'user'},
-      receiverId: { type: mongoose.Schema.Types.ObjectId, ref: 'user'},
+      senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+      receiverId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
       senderName: { type: String },
       receiverName: { type: String },
       body: { type: String, default: ''},
